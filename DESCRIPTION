@@ -1,0 +1,16 @@
+Package: blockpop
+Title: Get block-level population estimates for 2020
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Cory",
+           family = "McCartan",
+           role = c("aut", "cre"),
+           email = "cmccartan@g.harvard.edu",
+           comment = c(ORCID = "https://orcid.org/0000-0002-6251-669X"))
+Description: Uses FCC block-level population estimates from 2010--2019, which
+    are based on new roads and map data, to estimate 2020 block populations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
