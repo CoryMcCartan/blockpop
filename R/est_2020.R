@@ -1,4 +1,4 @@
-#' Estimate 2020 population from 2010--2019 populations
+#' Estimate 2020 population from 2010-2019 populations
 #'
 #' `r lifecycle::badge("experimental")`
 #' Uses the average growth rate over the specified window to impute the 2020

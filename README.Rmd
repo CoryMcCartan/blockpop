@@ -22,8 +22,8 @@ knitr::opts_chunk$set(
 
 2020 Census data is delayed and will be affected by differential privacy.
 This package uses FCC block-level population estimates from 2010--2019, which
-are based on new roads and map data, to estimate 2020 block populations.  In
-the future it may estimate other quantities of interest as well.
+are based on new roads and map data, to estimate 2020 block populations, both
+overall and by major race/ethnicity categories. 
 
 ## Installation
 
@@ -54,9 +54,30 @@ block estimates.
 ```{r message=F}
 library(dplyr)
 
-WA_blocks = load_state("WA", "data-raw/fcc.csv")
-WA_est = est_2020(WA_blocks)
+fcc_d = load_state("WA", "data-raw/fcc.csv")
+block_d = est_2020(fcc_d)
 
-print(WA_est)
-summarize(WA_est, across(starts_with("pop"), sum))
+print(block_d)
+summarize(block_d, across(starts_with("pop"), sum))
 ```
+
+To add populations by race and ethnicity, we need to download ACS and 2010
+Census data. 
+
+```{r include=F}
+acs_d = readr::read_rds("data-raw/acs.rds")
+census_d = readr::read_rds("data-raw/census2010.rds")
+```
+```{r eval=F}
+acs_d = download_acs_vars("WA")
+census_d = download_2010_vars("WA")
+```
+
+Then we call `harmonize_vars()` to create block-level estimates
+that still total to 2020 block populations and are close to ACS estimates at
+the block group level.
+
+```{r}
+harmonize_vars(block_d, census_d, acs_d)
+```
+

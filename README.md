@@ -13,8 +13,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 2020 Census data is delayed and will be affected by differential
 privacy. This package uses FCC block-level population estimates from
 2010–2019, which are based on new roads and map data, to estimate 2020
-block populations. In the future it may estimate other quantities of
-interest as well.
+block populations, both overall and by major race/ethnicity categories.
 
 ## Installation
 
@@ -42,10 +41,10 @@ the 2020 block estimates.
 ``` r
 library(dplyr)
 
-WA_blocks = load_state("WA", "data-raw/fcc.csv")
-WA_est = est_2020(WA_blocks)
+fcc_d = load_state("WA", "data-raw/fcc.csv")
+block_d = est_2020(fcc_d)
 
-print(WA_est)
+print(block_d)
 #> # A tibble: 195,574 x 4
 #>    state block           pop2010 pop2020
 #>    <fct> <chr>             <dbl>   <dbl>
@@ -60,9 +59,44 @@ print(WA_est)
 #>  9 WA    530019501001008       0       0
 #> 10 WA    530019501001009       0       0
 #> # … with 195,564 more rows
-summarize(WA_est, across(starts_with("pop"), sum))
+summarize(block_d, across(starts_with("pop"), sum))
 #> # A tibble: 1 x 2
 #>   pop2010  pop2020
 #>     <dbl>    <dbl>
 #> 1 6724540 7693612.
+```
+
+To add populations by race and ethnicity, we need to download ACS and
+2010 Census data.
+
+``` r
+acs_d = download_acs_vars("WA")
+census_d = download_2010_vars("WA")
+```
+
+Then we call `harmonize_vars()` to create block-level estimates that
+still total to 2020 block populations and are close to ACS estimates at
+the block group level.
+
+``` r
+harmonize_vars(block_d, census_d, acs_d)
+#> ℹ Joining tables.
+#> ℹ Harmonizing counts.
+#> # A tibble: 195,574 x 22
+#>    state block      pop2010 pop2020 vap2010 vap2020 pop_aian pop_asian pop_black
+#>    <fct> <chr>        <dbl>   <dbl>   <dbl>   <dbl>    <dbl>     <dbl>     <dbl>
+#>  1 WA    530019501…       0       0       0       0        0         0         0
+#>  2 WA    530019501…       0       0       0       0        0         0         0
+#>  3 WA    530019501…       0       0       0       0        0         0         0
+#>  4 WA    530019501…       0       0       0       0        0         0         0
+#>  5 WA    530019501…       0       0       0       0        0         0         0
+#>  6 WA    530019501…       0       0       0       0        0         0         0
+#>  7 WA    530019501…       0       0       0       0        0         0         0
+#>  8 WA    530019501…       0       0       0       0        0         0         0
+#>  9 WA    530019501…       0       0       0       0        0         0         0
+#> 10 WA    530019501…       0       0       0       0        0         0         0
+#> # … with 195,564 more rows, and 13 more variables: pop_hisp <dbl>,
+#> #   pop_nhpi <dbl>, pop_other <dbl>, pop_two <dbl>, pop_white <dbl>,
+#> #   vap_aian <dbl>, vap_asian <dbl>, vap_black <dbl>, vap_hisp <dbl>,
+#> #   vap_nhpi <dbl>, vap_other <dbl>, vap_two <dbl>, vap_white <dbl>
 ```

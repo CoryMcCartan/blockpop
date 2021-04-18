@@ -2,7 +2,7 @@
 % Please edit documentation in R/est_2020.R
 \name{est_2020}
 \alias{est_2020}
-\title{Estimate 2020 population from 2010--2019 populations}
+\title{Estimate 2020 population from 2010-2019 populations}
 \usage{
 est_2020(data, forecast_start = 2010)
 }

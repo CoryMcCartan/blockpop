@@ -12,14 +12,17 @@ Description: Uses FCC block-level population estimates from 2010--2019, which
 Imports: 
     withr,
     dplyr (>= 1.0.0),
+    tidyr (>= 1.0.0),
+    data.table,
+    dtplyr,
     stringr,
     readr,
     vroom,
+    tidycensus,
     lifecycle,
     cli
 Suggests: 
-    readxl,
-    tigris
+    readxl
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
