@@ -1,1 +1,4 @@
 url: https://corymccartan.github.io/blockpop
+template:
+  params:
+    bootswatch: flatly
