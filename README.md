@@ -41,17 +41,8 @@ the 2020 block estimates.
 
 ``` r
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
 WA_blocks = load_state("WA", "data-raw/fcc.csv")
-#> ℹ Extracting WA data.
 WA_est = est_2020(WA_blocks)
 
 print(WA_est)

@@ -51,7 +51,7 @@ download_fcc("data-raw/fcc.csv")
 Then we can extract the data for the state we care about and construct the 2020 
 block estimates.
 
-```{r}
+```{r message=F}
 library(dplyr)
 
 WA_blocks = load_state("WA", "data-raw/fcc.csv")
