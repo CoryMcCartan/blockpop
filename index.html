@@ -65,7 +65,7 @@
 <a href="#blockpop-estimate-census-block-populations-for-2020" class="anchor"></a><strong>blockpop</strong>: Estimate Census Block Populations for 2020</h1></div>
 <!-- badges: start -->
 
-<p>2020 Census data is delayed and will be affected by differential privacy. This package uses FCC block-level population estimates from 2010–2019, which are based on new roads and map data, to estimate 2020 block populations. In the future it may estimate other quantities of interest as well.</p>
+<p>2020 Census data is delayed and will be affected by differential privacy. This package uses FCC block-level population estimates from 2010–2019, which are based on new roads and map data, to estimate 2020 block populations, both overall and by major race/ethnicity categories.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -84,20 +84,11 @@
 <p>Then we can extract the data for the state we care about and construct the 2020 block estimates.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
 
-<span class="va">WA_blocks</span> <span class="op">=</span> <span class="fu"><a href="reference/load_state.html">load_state</a></span><span class="op">(</span><span class="st">"WA"</span>, <span class="st">"data-raw/fcc.csv"</span><span class="op">)</span>
-<span class="co">#&gt; ℹ Extracting WA data.</span>
-<span class="va">WA_est</span> <span class="op">=</span> <span class="fu"><a href="reference/est_2020.html">est_2020</a></span><span class="op">(</span><span class="va">WA_blocks</span><span class="op">)</span>
+<span class="va">fcc_d</span> <span class="op">=</span> <span class="fu"><a href="reference/load_state.html">load_state</a></span><span class="op">(</span><span class="st">"WA"</span>, <span class="st">"data-raw/fcc.csv"</span><span class="op">)</span>
+<span class="va">block_d</span> <span class="op">=</span> <span class="fu"><a href="reference/est_2020.html">est_2020</a></span><span class="op">(</span><span class="va">fcc_d</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">WA_est</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">block_d</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 195,574 x 4</span>
 <span class="co">#&gt;    state block           pop2010 pop2020</span>
 <span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;</span>
@@ -112,11 +103,37 @@
 <span class="co">#&gt;  9 WA    530019501001008       0       0</span>
 <span class="co">#&gt; 10 WA    530019501001009       0       0</span>
 <span class="co">#&gt; # … with 195,564 more rows</span>
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">WA_est</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"pop"</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"pop"</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 2</span>
 <span class="co">#&gt;   pop2010  pop2020</span>
 <span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 6724540 7693612.</span></code></pre></div>
+<p>To add populations by race and ethnicity, we need to download ACS and 2010 Census data.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">acs_d</span> <span class="op">=</span> <span class="fu"><a href="reference/download_acs_vars.html">download_acs_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span>
+<span class="va">census_d</span> <span class="op">=</span> <span class="fu"><a href="reference/download_2010_vars.html">download_2010_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span></code></pre></div>
+<p>Then we call <code><a href="reference/harmonize_vars.html">harmonize_vars()</a></code> to create block-level estimates that still total to 2020 block populations and are close to ACS estimates at the block group level.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/harmonize_vars.html">harmonize_vars</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="va">census_d</span>, <span class="va">acs_d</span><span class="op">)</span>
+<span class="co">#&gt; ℹ Joining tables.</span>
+<span class="co">#&gt; ℹ Harmonizing counts.</span>
+<span class="co">#&gt; # A tibble: 195,574 x 22</span>
+<span class="co">#&gt;    state block      pop2010 pop2020 vap2010 vap2020 pop_aian pop_asian pop_black</span>
+<span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  2 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  3 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  4 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  5 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  6 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  7 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  8 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt;  9 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt; 10 WA    530019501…       0       0       0       0        0         0         0</span>
+<span class="co">#&gt; # … with 195,564 more rows, and 13 more variables: pop_hisp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   pop_nhpi &lt;dbl&gt;, pop_other &lt;dbl&gt;, pop_two &lt;dbl&gt;, pop_white &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   vap_aian &lt;dbl&gt;, vap_asian &lt;dbl&gt;, vap_black &lt;dbl&gt;, vap_hisp &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   vap_nhpi &lt;dbl&gt;, vap_other &lt;dbl&gt;, vap_two &lt;dbl&gt;, vap_white &lt;dbl&gt;</span></code></pre></div>
 </div>
 </div>
   </div>
