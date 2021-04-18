@@ -60,9 +60,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="blockpop" class="section level1">
+<div id="blockpop-estimate-census-block-populations-for-2020" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#blockpop" class="anchor"></a>blockpop</h1></div>
+<a href="#blockpop-estimate-census-block-populations-for-2020" class="anchor"></a><strong>blockpop</strong>: Estimate Census Block Populations for 2020</h1></div>
 <!-- badges: start -->
 
 <p>2020 Census data is delayed and will be affected by differential privacy. This package uses FCC block-level population estimates from 2010–2019, which are based on new roads and map data, to estimate 2020 block populations. In the future it may estimate other quantities of interest as well.</p>
@@ -73,6 +73,50 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CoryMcCartan/blockpop"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>We start by downloading the FCC data locally (although you can skip this step if you just want estimates for one state).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://corymccartan.github.io/blockpop">blockpop</a></span><span class="op">)</span>
+<span class="fu"><a href="reference/download_fcc.html">download_fcc</a></span><span class="op">(</span><span class="st">"data-raw/fcc.csv"</span><span class="op">)</span></code></pre></div>
+<p>Then we can extract the data for the state we care about and construct the 2020 block estimates.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
+
+<span class="va">WA_blocks</span> <span class="op">=</span> <span class="fu"><a href="reference/load_state.html">load_state</a></span><span class="op">(</span><span class="st">"WA"</span>, <span class="st">"data-raw/fcc.csv"</span><span class="op">)</span>
+<span class="co">#&gt; ℹ Extracting WA data.</span>
+<span class="va">WA_est</span> <span class="op">=</span> <span class="fu"><a href="reference/est_2020.html">est_2020</a></span><span class="op">(</span><span class="va">WA_blocks</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">WA_est</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 195,574 x 4</span>
+<span class="co">#&gt;    state block           pop2010 pop2020</span>
+<span class="co">#&gt;    &lt;fct&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 WA    530019501001000       0       0</span>
+<span class="co">#&gt;  2 WA    530019501001001       0       0</span>
+<span class="co">#&gt;  3 WA    530019501001002       0       0</span>
+<span class="co">#&gt;  4 WA    530019501001003       0       0</span>
+<span class="co">#&gt;  5 WA    530019501001004       0       0</span>
+<span class="co">#&gt;  6 WA    530019501001005       0       0</span>
+<span class="co">#&gt;  7 WA    530019501001006       0       0</span>
+<span class="co">#&gt;  8 WA    530019501001007       0       0</span>
+<span class="co">#&gt;  9 WA    530019501001008       0       0</span>
+<span class="co">#&gt; 10 WA    530019501001009       0       0</span>
+<span class="co">#&gt; # … with 195,564 more rows</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">WA_est</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"pop"</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 1 x 2</span>
+<span class="co">#&gt;   pop2010  pop2020</span>
+<span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 6724540 7693612.</span></code></pre></div>
 </div>
 </div>
   </div>
@@ -96,6 +140,7 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/CoryMcCartan/blockpop/actions"><img src="https://github.com/CoryMcCartan/blockpop/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
 </ul>
 </div>
 </div>
