@@ -1,3 +1,6 @@
+#' @importFrom utils download.file unzip
+#' @import stringr
+#' @import dplyr
 #' @keywords internal
 "_PACKAGE"
 
