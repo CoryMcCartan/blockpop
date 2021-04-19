@@ -1,0 +1,87 @@
+---
+title: "ACS-Decennial-Block Harmonization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ACS-Decennial-Block Harmonization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse=TRUE, comment = "#>",
+                      eval=file.exists(here::here("data-raw/fcc.csv")))
+```
+
+This vignette examines the accuracy of the ACS-Decennial-Block harmonization
+calculated by `harmonize_vars()`. We start where the [README](../) leaves off.
+
+```{r eval=F}
+library(blockpop)
+library(dplyr)
+library(stringr)
+library(tidyr)
+
+acs_d = download_acs_vars("WA")
+census_d = download_2010_vars("WA")
+
+block_d = download_fcc("data-raw/fcc.csv") %>%
+    load_state("WA", .) %>%
+    est_2020() %>%
+    harmonize_vars(census_d, acs_d)
+print(block_d)
+```
+```{r setup, echo=F, message=F, cache=TRUE}
+library(blockpop)
+library(dplyr)
+library(stringr)
+library(tidyr)
+
+fcc_d = load_state("WA", here::here("data-raw/fcc.csv"))
+block_d = est_2020(fcc_d)
+acs_d = readr::read_rds(here::here("data-raw/acs.rds"))
+census_d = readr::read_rds(here::here("data-raw/census2010.rds"))
+block_d = harmonize_vars(block_d, census_d, acs_d)
+print(block_d)
+```
+
+Then we join summarize our block-level estimates at the block group level and
+join them to the ACS data to compare.
+
+```{r}
+sum_d = block_d %>%
+    select(-starts_with("vap_")) %>%
+    mutate(bgroup = str_sub(block, 1, 12)) %>%
+    select(-block, -state) %>%
+    group_by(bgroup) %>%
+    summarize(across(everything(), sum)) %>%
+    rename_with(~ str_c("est_", .), .cols=starts_with("pop_")) %>%
+    inner_join(rename_with(acs_d, ~ str_c("acs_", .), 
+                           .cols=-bgroup), by="bgroup") %>%
+    pivot_longer(c(starts_with("est_pop_"), starts_with("acs_pop_")),
+                 names_to=c("source", "type", "race"),
+                 names_sep="_", values_to="count") %>%
+    select(-type) %>%
+    pivot_wider(names_from=source, values_from=count) %>%
+    mutate(est_pct = est/pop2020,
+           acs_pct = acs/acs_pop)
+```
+
+Plotting, we see excellent agreement between the ACS and estimated demographic
+percentages at the block group level. In fact, the Spearman correlation is 
+`r sprintf("%.2f%%", with(sum_d, 100*cor(acs_pct, est_pct, method="spearman", use="complete.obs")))`.
+
+```{r}
+library(ggplot2)
+
+ggplot(sum_d, aes(acs_pct, est_pct, color=race)) +
+    geom_point(size=0.1, alpha=0.5) +
+    coord_cartesian(expand=0) +
+    guides(color=guide_legend(override.aes=list(size=5))) +
+    theme_bw() 
+```
+
+This agreement occurs with 2020 block total population estimates exactly equal
+to the projections from `est_2020()`, and using block-level demographic estimates
+that are as close as possible to the 2010 Census counts. This means much more
+accuracy and granularity than simple population-based disaggregation from
+block-group-level ACS data.

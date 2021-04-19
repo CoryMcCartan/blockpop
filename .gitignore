@@ -9,3 +9,6 @@
 docs
 data-raw/*
 !data-raw/README.md
+inst/doc
+doc
+Meta

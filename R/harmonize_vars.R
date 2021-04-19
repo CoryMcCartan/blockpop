@@ -37,16 +37,17 @@ harmonize_vars = function(block_d, census_d, acs_d) {
                     values_from=count)
 
     cli::cli_alert_info("Harmonizing counts.")
+    # statewide % of population of voting age
     tot_vap_frac = with(joined_d, sum(vap2010)/sum(pop2010))
+
     joined_d %>%
         lazy_dt() %>%
+        # compute demographic margins at multiple levels
         mutate(tract = str_sub(block, 1, 11),
                county = str_sub(block, 1, 5)) %>%
         group_by(bgroup, race) %>%
         mutate(cens_bg_pop = sum(cens_pop),
-               cens_bg_vap = sum(cens_vap),
                bg_pop10 = sum(pop2010),
-               bg_pop20 = sum(pop2020),
                bg_vap10 = sum(vap2010)) %>%
         group_by(tract, race) %>%
         mutate(tr_acs_pop = sum(acs_pop),
@@ -55,6 +56,7 @@ harmonize_vars = function(block_d, census_d, acs_d) {
         mutate(cty_acs_pop = sum(acs_pop),
                cty_acs_tot = sum(acs_total)) %>%
         ungroup() %>%
+        # rescale for demographic margins
         mutate(acs_pct = coalesce(acs_pop/acs_total, tr_acs_pop/tr_acs_tot,
                                   cty_acs_pop/cty_acs_tot),
                cens_bg_pop_pct = coalesce(cens_bg_pop / bg_pop10, acs_pct),
@@ -66,6 +68,7 @@ harmonize_vars = function(block_d, census_d, acs_d) {
                est_vap = if_else(cens_vap > 0 & cens_bg_pop_pct > 0,
                                  cens_vap * adj,
                                  acs_pct * vap_frac * pop2020)) %>%
+        # rescale for block population margins
         group_by(block) %>%
         mutate(est_tot_pop = sum(est_pop)) %>%
         ungroup() %>%
@@ -76,6 +79,7 @@ harmonize_vars = function(block_d, census_d, acs_d) {
                est_vap = if_else(est_tot_pop==0 & pop2020>0,
                                  pop2020*vap_frac*acs_pct, est_vap)) %>%
         group_by(block) %>%
+        # wrap-up
         mutate(vap2020 = sum(est_vap)) %>%
         select(state, block, pop2010, pop2020, vap2010, vap2020, race, pop=est_pop, vap=est_vap) %>%
         pivot_wider(names_from=race, values_from=c(pop, vap)) %>%

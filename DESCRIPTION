@@ -22,6 +22,9 @@ Imports:
     lifecycle,
     cli
 Suggests: 
+    rmarkdown,
+    knitr,
+    ggplot2,
     readxl
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -31,3 +34,4 @@ RoxygenNote: 7.1.1
 URL: https://corymccartan.github.io/blockpop
 Depends: 
     R (>= 2.10)
+VignetteBuilder: knitr
