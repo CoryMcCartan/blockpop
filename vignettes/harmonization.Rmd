@@ -68,7 +68,7 @@ sum_d = block_d %>%
 
 Plotting, we see excellent agreement between the ACS and estimated demographic
 percentages at the block group level. In fact, the Spearman correlation is 
-`r sprintf("%.2f%%", with(sum_d, 100*cor(acs_pct, est_pct, method="spearman", use="complete.obs")))`.
+in excess of 99.9%.
 
 ```{r}
 library(ggplot2)
