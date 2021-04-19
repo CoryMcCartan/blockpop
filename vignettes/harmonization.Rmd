@@ -66,11 +66,19 @@ sum_d = block_d %>%
            acs_pct = acs/acs_pop)
 ```
 
+```{r eval=T, include=F}
+if (exists("sum_d")) {
+    readr::write_rds(sum_d, here::here("inst/extdata/sum.rds"), compress="gz")
+} else {
+    sum_d = readr::read_rds(system.file("extdata", "sum.rds", package="blockpop"))
+}
+```
+
 Plotting, we see excellent agreement between the ACS and estimated demographic
 percentages at the block group level. In fact, the Spearman correlation is 
 in excess of 99.9%.
 
-```{r}
+```{r eval=T}
 library(ggplot2)
 
 ggplot(sum_d, aes(acs_pct, est_pct, color=race)) +
