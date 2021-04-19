@@ -8,8 +8,8 @@
 #' adjusted within block groups to match the ACS block-group percentages. Then
 #' these percentages are applied to the newly estimated block populations.
 #' Finally, the block race populations are rescaled so that the block
-#' populations match the 2020 estimates. This is essentially a 1-round IPF
-#' procedure.
+#' populations match the 2020 estimates. This is essentially a 1-round iterative
+#' proportional fitting (IPF) procedure.
 #'
 #' @param block_d the output of [est_2020()]
 #' @param census_d the output of [download_2010_vars()] or similar

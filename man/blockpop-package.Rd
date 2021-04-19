@@ -13,6 +13,7 @@ Uses FCC block-level population estimates from 2010--2019, which
 Useful links:
 \itemize{
   \item \url{https://corymccartan.github.io/blockpop}
+  \item Report bugs at \url{https://github.com/CoryMcCartan/blockpop/issues}
 }
 
 }

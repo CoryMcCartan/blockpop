@@ -13,7 +13,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 2020 Census data is delayed and will be affected by differential
 privacy. This package uses FCC block-level population estimates from
 2010–2019, which are based on new roads and map data, to estimate 2020
-block populations, both overall and by major race/ethnicity categories.
+block populations, both overall and by major race/ethnicity categories
+(using iterative proportional fitting).
 
 ## Installation
 
@@ -61,9 +62,9 @@ print(block_d)
 #> # … with 195,564 more rows
 summarize(block_d, across(starts_with("pop"), sum))
 #> # A tibble: 1 x 2
-#>   pop2010  pop2020
-#>     <dbl>    <dbl>
-#> 1 6724540 7693612.
+#>   pop2010 pop2020
+#>     <dbl>   <dbl>
+#> 1 6724540 7693612
 ```
 
 To add populations by race and ethnicity, we need to download ACS and
