@@ -1,8 +1,9 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-04-18T22:18Z
+articles:
+  harmonization: harmonization.html
+last_built: 2021-04-19T02:36Z
 urls:
   reference: https://corymccartan.github.io/blockpop/reference
   article: https://corymccartan.github.io/blockpop/articles

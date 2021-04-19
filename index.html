@@ -47,8 +47,27 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/harmonization.html">ACS-Decennial-Block Harmonization</a>
+    </li>
+  </ul>
+</li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/CoryMcCartan/blockpop/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -65,7 +84,7 @@
 <a href="#blockpop-estimate-census-block-populations-for-2020" class="anchor"></a><strong>blockpop</strong>: Estimate Census Block Populations for 2020</h1></div>
 <!-- badges: start -->
 
-<p>2020 Census data is delayed and will be affected by differential privacy. This package uses FCC block-level population estimates from 2010–2019, which are based on new roads and map data, to estimate 2020 block populations, both overall and by major race/ethnicity categories.</p>
+<p>2020 Census data is delayed and will be affected by differential privacy. This package uses FCC block-level population estimates from 2010–2019, which are based on new roads and map data, to estimate 2020 block populations, both overall and by major race/ethnicity categories (using iterative proportional fitting).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -105,9 +124,9 @@
 <span class="co">#&gt; # … with 195,564 more rows</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"pop"</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 2</span>
-<span class="co">#&gt;   pop2010  pop2020</span>
-<span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 6724540 7693612.</span></code></pre></div>
+<span class="co">#&gt;   pop2010 pop2020</span>
+<span class="co">#&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 6724540 7693612</span></code></pre></div>
 <p>To add populations by race and ethnicity, we need to download ACS and 2010 Census data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">acs_d</span> <span class="op">=</span> <span class="fu"><a href="reference/download_acs_vars.html">download_acs_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span>
@@ -139,11 +158,20 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/CoryMcCartan/blockpop/">https://​github.com/​CoryMcCartan/​blockpop/​</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/CoryMcCartan/blockpop/issues">https://​github.com/​CoryMcCartan/​blockpop/​issues</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small>GPL (&gt;= 3)</small></li>
 </ul>
 </div>
 <div class="developers">
