@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   harmonization: harmonization.html
-last_built: 2021-04-26T16:37Z
+last_built: 2021-04-26T22:05Z
 urls:
   reference: https://corymccartan.github.io/blockpop/reference
   article: https://corymccartan.github.io/blockpop/articles
