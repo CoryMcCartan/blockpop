@@ -7,7 +7,8 @@
 \title{blockpop: Estimate Census Block Populations for 2020}
 \description{
 Uses FCC block-level population estimates from 2010--2019, which
-    are based on new roads and map data, to estimate 2020 block populations.
+    are based on new roads and map data, along with decennial Census and ACS 
+    data, to estimate 2020 block populations.
 }
 \seealso{
 Useful links:

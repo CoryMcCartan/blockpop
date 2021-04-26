@@ -18,8 +18,8 @@ A modified data frame with just 2010, base year, and 2020 estimates.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Uses the average growth rate over the specified window to impute the 2020
-population. Final estimates are rescaled to match the Census July 1, 2020
-population estimates at the state level.
+population. Final estimates are rescaled to match the Census April 1, 2020
+apportioment populations at the state level.
 }
 \examples{
 \dontrun{
