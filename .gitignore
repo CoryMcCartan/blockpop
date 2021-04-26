@@ -7,8 +7,7 @@
 .Rdata
 .httr-oauth
 docs
-data-raw/*
-!data-raw/README.md
+data-raw/fcc.csv
 inst/doc
 doc
 Meta
