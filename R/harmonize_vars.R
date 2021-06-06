@@ -38,7 +38,7 @@ bl_harmonize_vars = function(block_d, census_d, acs_d) {
 
     cli::cli_alert_info("Harmonizing counts.")
     # statewide % of population of voting age
-    tot_vap_frac = with(joined_d, sum(vap2010)/sum(pop2010))
+    tot_vap_frac = sum(joined_d$vap2010)/sum(joined_d$pop2010)
 
     joined_d %>%
         lazy_dt() %>%
@@ -72,16 +72,25 @@ bl_harmonize_vars = function(block_d, census_d, acs_d) {
         group_by(block) %>%
         mutate(est_tot_pop = sum(est_pop)) %>%
         ungroup() %>%
-        mutate(est_pop_tmp = est_pop * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
+        mutate(est_pop_tmp = est_pop * if_else(est_tot_pop>0,
+                                                     pop2020/est_tot_pop, 0),
                est_pop = if_else(est_tot_pop==0 & pop2020>0,
                                  pop2020*acs_pct, est_pop_tmp),
-               est_vap_tmp = est_vap * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
+               est_vap_tmp = est_vap * if_else(est_tot_pop>0,
+                                                     pop2020/est_tot_pop, 0),
                est_vap = if_else(est_tot_pop==0 & pop2020>0,
                                  pop2020*vap_frac*acs_pct, est_vap_tmp)) %>%
         group_by(block) %>%
         # wrap-up
         mutate(vap2020 = sum(est_vap)) %>%
-        select(state, block, pop2010, pop2020, vap2010, vap2020, race, pop=est_pop, vap=est_vap) %>%
+        select(state, block, pop2010, pop2020, vap2010,
+               vap2020, race, pop=est_pop, vap=est_vap) %>%
         pivot_wider(names_from=race, values_from=c(pop, vap)) %>%
         as_tibble()
 }
+
+utils::globalVariables(c("acs_pct", "acs_pop", "acs_total", "adj", "bg_pop10", "bg_vap10", "bgroup", "block",
+                         "cens_bg_pop", "cens_bg_pop_pct", "cens_pop", "cens_vap", "county", "cty_acs_pop",
+                         "cty_acs_tot", "est_pop", "est_pop_tmp", "est_tot_pop", "est_vap", "est_vap_tmp",
+                         "pop", "pop2010", "pop2020", "race", "state", "tr_acs_pop", "tr_acs_tot", "tract", "type",
+                         "vap", "vap_frac", "vap2010", "vap2020"))

@@ -7,7 +7,7 @@
 bl_est_2020(data, forecast_start = 2010)
 }
 \arguments{
-\item{data}{the output of \code{\link[=load_state]{load_state()}}}
+\item{data}{the output of \code{\link[=bl_load_state]{bl_load_state()}}}
 
 \item{forecast_start}{the year to use as the base year. E.g. if 2013, then
 the average growth rate from 2013--2019 will be used.}
@@ -23,7 +23,7 @@ apportioment populations at the state level.
 }
 \examples{
 \donttest{
-d = bl_download_state("WA")
+d = bl_load_state("WA")
 bl_est_2020(d, 2010)
 }
 

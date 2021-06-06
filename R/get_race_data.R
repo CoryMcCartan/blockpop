@@ -42,8 +42,8 @@ bl_download_2010_vars = function(state) {
                                   variables=census_vars, cache_table=TRUE,
                                   year=2010, output="wide")
     })) %>%
-        rename(block=GEOID) %>%
-        select(-NAME)
+        rename(block=.data$GEOID) %>%
+        select(-.data$NAME)
 }
 
 
@@ -76,6 +76,6 @@ bl_download_acs_vars = function(state) {
     d = tidycensus::get_acs("block group", state=state,
                             variables=census_vars, cache_table=TRUE,
                             year=2019, output="wide") %>%
-        rename(bgroup=GEOID) %>%
-        select(-NAME, -ends_with("M"))
+        rename(bgroup=.data$GEOID) %>%
+        select(-.data$NAME, -ends_with("M"))
 }

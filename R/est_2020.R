@@ -5,7 +5,7 @@
 #' population. Final estimates are rescaled to match the Census April 1, 2020
 #' apportioment populations at the state level.
 #'
-#' @param data the output of [load_state()]
+#' @param data the output of [bl_load_state()]
 #' @param forecast_start the year to use as the base year. E.g. if 2013, then
 #'   the average growth rate from 2013--2019 will be used.
 #'
@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \donttest{
-#' d = bl_download_state("WA")
+#' d = bl_load_state("WA")
 #' bl_est_2020(d, 2010)
 #' }
 #'
