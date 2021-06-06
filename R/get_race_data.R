@@ -2,14 +2,16 @@
 #' Download 2010 Census variables at the block level
 #'
 #' Downloads population and voting-age population by race at the block level
-#' for the 2010 decennial Census.
+#' for the 2010 decennial Census. API key required:
+#' <https://api.census.gov/data/key_signup.html>.
 #'
 #' @param state the two-letter abbreviation of the state to get data for.
 #'
 #' @returns A data frame with the population counts
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
+#' # API key required
 #' bl_download_2010_vars("WA")
 #' }
 #'
@@ -50,14 +52,16 @@ bl_download_2010_vars = function(state) {
 #' Download 2019 5-year ACS variables at the block group level
 #'
 #' Downloads population and voting-age population by race at the block group
-#' level for the 2019 5-year American Communities Survey.
+#' level for the 2019 5-year American Communities Survey. API key required:
+#' <https://api.census.gov/data/key_signup.html>.
 #'
 #' @param state the two-letter abbreviation of the state to get data for.
 #'
 #' @returns A data frame with the population counts
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
+#' # API key required
 #' bl_download_acs_vars("WA")
 #' }
 #'

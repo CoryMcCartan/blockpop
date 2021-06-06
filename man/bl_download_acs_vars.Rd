@@ -14,10 +14,12 @@ A data frame with the population counts
 }
 \description{
 Downloads population and voting-age population by race at the block group
-level for the 2019 5-year American Communities Survey.
+level for the 2019 5-year American Communities Survey. API key required:
+\url{https://api.census.gov/data/key_signup.html}.
 }
 \examples{
-\donttest{
+\dontrun{
+# API key required
 bl_download_acs_vars("WA")
 }
 

@@ -14,10 +14,12 @@ A data frame with the population counts
 }
 \description{
 Downloads population and voting-age population by race at the block level
-for the 2010 decennial Census.
+for the 2010 decennial Census. API key required:
+\url{https://api.census.gov/data/key_signup.html}.
 }
 \examples{
-\donttest{
+\dontrun{
+# API key required
 bl_download_2010_vars("WA")
 }
 

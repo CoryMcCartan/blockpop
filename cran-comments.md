@@ -11,6 +11,6 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
-* The examples for several functions are \donttest{}, because these functions
-  download large amounts of data and/or take significantly longer than five
-  seconds to run.
+* The examples for several functions are \donttest{} or \dontrun{}, because
+  these functions download large amounts of data, require API keys, and/or take
+  significantly longer than five seconds to run.
