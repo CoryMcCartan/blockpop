@@ -2,3 +2,4 @@ url: https://corymccartan.github.io/blockpop
 template:
   params:
     bootswatch: flatly
+    ganalytics: UA-79274202-5

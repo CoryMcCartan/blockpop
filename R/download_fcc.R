@@ -8,7 +8,7 @@
 #' @returns The path, invisibly.
 #'
 #' @examples \donttest{
-#' bl_download_fcc("fcc.csv")
+#' bl_download_fcc("data-raw/fcc.csv")
 #' }
 #'
 #' @export
