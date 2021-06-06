@@ -9,12 +9,12 @@
 #' @returns A data frame with the population counts
 #'
 #' @examples
-#' \dontrun{
-#' download_2010_vars("WA")
+#' \donttest{
+#' bl_download_2010_vars("WA")
 #' }
 #'
 #' @export
-download_2010_vars = function(state) {
+bl_download_2010_vars = function(state) {
     census_vars = c(pop       = "P001001",
                     pop_hisp  = "P005010",
                     pop_white = "P005003",
@@ -57,12 +57,12 @@ download_2010_vars = function(state) {
 #' @returns A data frame with the population counts
 #'
 #' @examples
-#' \dontrun{
-#' download_acs_vars("WA")
+#' \donttest{
+#' bl_download_acs_vars("WA")
 #' }
 #'
 #' @export
-download_acs_vars = function(state) {
+bl_download_acs_vars = function(state) {
     census_vars = c(pop       = "B03002_001E",
                     pop_hisp  = "B03002_012E",
                     pop_white = "B03002_003E",

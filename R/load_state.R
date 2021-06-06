@@ -3,17 +3,17 @@
 #' `r lifecycle::badge("experimental")`
 #' @param state the two-letter abbreviation of the state to get data for.
 #' @param path the path to the FCC data. Defaults to the online ZIP file, but
-#'   can point to a local zip file or an extracted CSV (from e.g. [download_fcc()]).
+#'   can point to a local zip file or an extracted CSV (from e.g. [bl_download_fcc()]).
 #'
 #' @returns A data frame with the population estimates.
 #'
 #' @examples
-#' \dontrun{
-#' download_state("WA")
+#' \donttest{
+#' load_state("WA")
 #' }
 #'
 #' @export
-load_state = function(state, path="https://www.fcc.gov/file/19314/download") {
+bl_load_state = function(state, path="https://www.fcc.gov/file/19314/download") {
     if (str_detect(path, "(http(s?)|ftp)://")) {
         cli::cli_alert_info("Downloading data.")
         url = path

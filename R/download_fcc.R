@@ -7,8 +7,12 @@
 #'
 #' @returns The path, invisibly.
 #'
+#' @examples \donttest{
+#' bl_download_fcc("fcc.csv")
+#' }
+#'
 #' @export
-download_fcc = function(path, url="https://www.fcc.gov/file/19314/download") {
+bl_download_fcc = function(path, url="https://www.fcc.gov/file/19314/download") {
     zip_path = withr::local_tempfile(fileext=".zip")
     download.file(url, zip_path)
     unzip_dir = withr::local_tempdir()

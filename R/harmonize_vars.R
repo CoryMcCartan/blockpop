@@ -1,8 +1,8 @@
 #' Harmonize 2010 Decennial Census, 2019 ACS, and 2020 Block Population Estimates
 #'
 #' Creates estimates for race/ethnicity variables for blocks in 2020, based on
-#' the 2010 Census ([download_2010_vars()]) and 2019 ACS ([download_acs_vars()])
-#' data.
+#' the 2010 Census ([bl_download_2010_vars()]) and 2019 ACS
+#' ([bl_download_acs_vars()]) data.
 #'
 #' The racial breakdown of total and voting-age population are proportionally
 #' adjusted within block groups to match the ACS block-group percentages. Then
@@ -11,15 +11,15 @@
 #' populations match the 2020 estimates. This is essentially a 1-round iterative
 #' proportional fitting (IPF) procedure.
 #'
-#' @param block_d the output of [est_2020()]
-#' @param census_d the output of [download_2010_vars()] or similar
-#' @param acs_d the output of [download_acs_vars()] or similar
+#' @param block_d the output of [bl_est_2020()]
+#' @param census_d the output of [bl_download_2010_vars()] or similar
+#' @param acs_d the output of [bl_download_acs_vars()] or similar
 #'
 #' @returns A data frame of 2020 block-level estimates for the variables in
 #'   `census_d`.
 #'
 #' @export
-harmonize_vars = function(block_d, census_d, acs_d) {
+bl_harmonize_vars = function(block_d, census_d, acs_d) {
     census_d = rename_with(census_d, ~ str_c("cens_", .), .cols=-block)
     acs_d = rename_with(acs_d, ~ str_c("acs_", .), .cols=-bgroup)
     cli::cli_alert_info("Joining tables.")
@@ -72,17 +72,16 @@ harmonize_vars = function(block_d, census_d, acs_d) {
         group_by(block) %>%
         mutate(est_tot_pop = sum(est_pop)) %>%
         ungroup() %>%
-        mutate(est_pop = est_pop * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
+        mutate(est_pop_tmp = est_pop * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
                est_pop = if_else(est_tot_pop==0 & pop2020>0,
-                                 pop2020*acs_pct, est_pop),
-               est_vap = est_vap * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
+                                 pop2020*acs_pct, est_pop_tmp),
+               est_vap_tmp = est_vap * if_else(est_tot_pop>0, pop2020/est_tot_pop, 0),
                est_vap = if_else(est_tot_pop==0 & pop2020>0,
-                                 pop2020*vap_frac*acs_pct, est_vap)) %>%
+                                 pop2020*vap_frac*acs_pct, est_vap_tmp)) %>%
         group_by(block) %>%
         # wrap-up
         mutate(vap2020 = sum(est_vap)) %>%
         select(state, block, pop2010, pop2020, vap2010, vap2020, race, pop=est_pop, vap=est_vap) %>%
         pivot_wider(names_from=race, values_from=c(pop, vap)) %>%
         as_tibble()
-
 }

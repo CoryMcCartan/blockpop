@@ -12,13 +12,13 @@
 #' @returns A modified data frame with just 2010, base year, and 2020 estimates.
 #'
 #' @examples
-#' \dontrun{
-#' d = download_state("WA")
-#' est_2020(d, 2010)
+#' \donttest{
+#' d = bl_download_state("WA")
+#' bl_est_2020(d, 2010)
 #' }
 #'
 #' @export
-est_2020 = function(data, forecast_start=2010) {
+bl_est_2020 = function(data, forecast_start=2010) {
     pop_cols = c(str_c("pop", forecast_start), "pop2019")
     period = 2019 - forecast_start
 

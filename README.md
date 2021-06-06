@@ -34,7 +34,7 @@ step if you just want estimates for one state).
 
 ``` r
 library(blockpop)
-download_fcc("data-raw/fcc.csv")
+bl_download_fcc("data-raw/fcc.csv")
 ```
 
 Then we can extract the data for the state we care about and construct
@@ -43,8 +43,8 @@ the 2020 block estimates.
 ``` r
 library(dplyr)
 
-fcc_d = load_state("WA", "data-raw/fcc.csv")
-block_d = est_2020(fcc_d)
+fcc_d = bl_load_state("WA", "data-raw/fcc.csv")
+block_d = bl_est_2020(fcc_d)
 
 print(block_d)
 #> # A tibble: 195,574 x 4
@@ -63,25 +63,25 @@ print(block_d)
 #> # … with 195,564 more rows
 summarize(block_d, across(starts_with("pop"), sum))
 #> # A tibble: 1 x 2
-#>   pop2010 pop2020
-#>     <dbl>   <dbl>
-#> 1 6724540 7715946
+#>   pop2010  pop2020
+#>     <dbl>    <dbl>
+#> 1 6724540 7715946.
 ```
 
 To add populations by race and ethnicity, we need to download ACS and
 2010 Census data.
 
 ``` r
-acs_d = download_acs_vars("WA")
-census_d = download_2010_vars("WA")
+acs_d = bl_download_acs_vars("WA")
+census_d = bl_download_2010_vars("WA")
 ```
 
-Then we call `harmonize_vars()` to create block-level estimates that
+Then we call `bl_harmonize_vars()` to create block-level estimates that
 still total to 2020 block populations and are close to ACS estimates at
 the block group level.
 
 ``` r
-harmonize_vars(block_d, census_d, acs_d)
+bl_harmonize_vars(block_d, census_d, acs_d)
 #> ℹ Joining tables.
 #> ℹ Harmonizing counts.
 #> # A tibble: 195,574 x 22

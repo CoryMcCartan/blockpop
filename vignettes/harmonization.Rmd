@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse=TRUE, comment = "#>",
 ```
 
 This vignette examines the accuracy of the ACS-Decennial-Block harmonization
-calculated by `harmonize_vars()`. We start where the [README](../) leaves off.
+calculated by `bl_harmonize_vars()`. We start where the [README](../) leaves off.
 
 ```{r eval=F}
 library(blockpop)
@@ -21,13 +21,13 @@ library(dplyr)
 library(stringr)
 library(tidyr)
 
-acs_d = download_acs_vars("WA")
-census_d = download_2010_vars("WA")
+acs_d = bl_download_acs_vars("WA")
+census_d = bl_download_2010_vars("WA")
 
-block_d = download_fcc("data-raw/fcc.csv") %>%
-    load_state("WA", .) %>%
-    est_2020() %>%
-    harmonize_vars(census_d, acs_d)
+block_d = bl_download_fcc("data-raw/fcc.csv") %>%
+    bl_load_state("WA", .) %>%
+    bl_est_2020() %>%
+    bl_harmonize_vars(census_d, acs_d)
 print(block_d)
 ```
 ```{r setup, echo=F, message=F}
@@ -36,11 +36,11 @@ library(dplyr)
 library(stringr)
 library(tidyr)
 
-fcc_d = load_state("WA", here::here("data-raw/fcc.csv"))
-block_d = est_2020(fcc_d)
+fcc_d = bl_load_state("WA", here::here("data-raw/fcc.csv"))
+block_d = bl_est_2020(fcc_d)
 acs_d = readr::read_rds(here::here("data-raw/acs.rds"))
 census_d = readr::read_rds(here::here("data-raw/census2010.rds"))
-block_d = harmonize_vars(block_d, census_d, acs_d)
+block_d = bl_harmonize_vars(block_d, census_d, acs_d)
 print(block_d)
 ```
 
@@ -89,7 +89,7 @@ ggplot(sum_d, aes(acs_pct, est_pct, color=race)) +
 ```
 
 This agreement occurs with 2020 block total population estimates exactly equal
-to the projections from `est_2020()`, and using block-level demographic estimates
-that are as close as possible to the 2010 Census counts. This means much more
-accuracy and granularity than simple population-based disaggregation from
-block-group-level ACS data.
+to the projections from `bl_est_2020()`, and using block-level demographic
+estimates that are as close as possible to the 2010 Census counts. This means
+much more accuracy and granularity than simple population-based disaggregation
+from block-group-level ACS data.

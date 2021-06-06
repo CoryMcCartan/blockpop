@@ -1,5 +1,5 @@
 #' @import stringr
-#' @importFrom data.table `:=`
+#' @importFrom data.table `:=` fcoalesce fifelse
 #' @import dtplyr
 #' @import dplyr
 #' @import tidyr
