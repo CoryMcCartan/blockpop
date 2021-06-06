@@ -18,7 +18,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-79274202-5"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-79274202-5');
+</script>
 </head>
 <body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
@@ -60,6 +66,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -100,13 +109,13 @@
 <p>We start by downloading the FCC data locally (although you can skip this step if you just want estimates for one state).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://corymccartan.github.io/blockpop">blockpop</a></span><span class="op">)</span>
-<span class="fu"><a href="reference/download_fcc.html">download_fcc</a></span><span class="op">(</span><span class="st">"data-raw/fcc.csv"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/bl_download_fcc.html">bl_download_fcc</a></span><span class="op">(</span><span class="st">"data-raw/fcc.csv"</span><span class="op">)</span></code></pre></div>
 <p>Then we can extract the data for the state we care about and construct the 2020 block estimates.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
-<span class="va">fcc_d</span> <span class="op">=</span> <span class="fu"><a href="reference/load_state.html">load_state</a></span><span class="op">(</span><span class="st">"WA"</span>, <span class="st">"data-raw/fcc.csv"</span><span class="op">)</span>
-<span class="va">block_d</span> <span class="op">=</span> <span class="fu"><a href="reference/est_2020.html">est_2020</a></span><span class="op">(</span><span class="va">fcc_d</span><span class="op">)</span>
+<span class="va">fcc_d</span> <span class="op">=</span> <span class="fu"><a href="reference/bl_load_state.html">bl_load_state</a></span><span class="op">(</span><span class="st">"WA"</span>, <span class="st">"data-raw/fcc.csv"</span><span class="op">)</span>
+<span class="va">block_d</span> <span class="op">=</span> <span class="fu"><a href="reference/bl_est_2020.html">bl_est_2020</a></span><span class="op">(</span><span class="va">fcc_d</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">block_d</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 195,574 x 4</span>
@@ -125,16 +134,16 @@
 <span class="co">#&gt; # … with 195,564 more rows</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"pop"</span><span class="op">)</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 2</span>
-<span class="co">#&gt;   pop2010 pop2020</span>
-<span class="co">#&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 6724540 7715946</span></code></pre></div>
+<span class="co">#&gt;   pop2010  pop2020</span>
+<span class="co">#&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 6724540 7715946.</span></code></pre></div>
 <p>To add populations by race and ethnicity, we need to download ACS and 2010 Census data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">acs_d</span> <span class="op">=</span> <span class="fu"><a href="reference/download_acs_vars.html">download_acs_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span>
-<span class="va">census_d</span> <span class="op">=</span> <span class="fu"><a href="reference/download_2010_vars.html">download_2010_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span></code></pre></div>
-<p>Then we call <code><a href="reference/harmonize_vars.html">harmonize_vars()</a></code> to create block-level estimates that still total to 2020 block populations and are close to ACS estimates at the block group level.</p>
+<code class="sourceCode R"><span class="va">acs_d</span> <span class="op">=</span> <span class="fu"><a href="reference/bl_download_acs_vars.html">bl_download_acs_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span>
+<span class="va">census_d</span> <span class="op">=</span> <span class="fu"><a href="reference/bl_download_2010_vars.html">bl_download_2010_vars</a></span><span class="op">(</span><span class="st">"WA"</span><span class="op">)</span></code></pre></div>
+<p>Then we call <code><a href="reference/bl_harmonize_vars.html">bl_harmonize_vars()</a></code> to create block-level estimates that still total to 2020 block populations and are close to ACS estimates at the block group level.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/harmonize_vars.html">harmonize_vars</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="va">census_d</span>, <span class="va">acs_d</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="reference/bl_harmonize_vars.html">bl_harmonize_vars</a></span><span class="op">(</span><span class="va">block_d</span>, <span class="va">census_d</span>, <span class="va">acs_d</span><span class="op">)</span>
 <span class="co">#&gt; ℹ Joining tables.</span>
 <span class="co">#&gt; ℹ Harmonizing counts.</span>
 <span class="co">#&gt; # A tibble: 195,574 x 22</span>

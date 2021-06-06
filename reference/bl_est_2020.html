@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • blockpop</title>
+<title>Estimate 2020 population from 2010-2019 populations — bl_est_2020 • blockpop</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,11 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Estimate 2020 population from 2010-2019 populations — bl_est_2020" />
+<meta property="og:description" content="
+Uses the average growth rate over the specified window to impute the 2020
+population. Final estimates are rescaled to match the Census April 1, 2020
+apportioment populations at the state level." />
 
 
 
@@ -68,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -132,18 +136,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Estimate 2020 population from 2010-2019 populations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/CoryMcCartan/blockpop/blob/master/R/est_2020.R'><code>R/est_2020.R</code></a></small>
+    <div class="hidden name"><code>bl_est_2020.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="harmonization.html">ACS-Decennial-Block Harmonization</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#experimental'><img src='figures/lifecycle-experimental.svg' alt='[Experimental]' /></a>
+Uses the average growth rate over the specified window to impute the 2020
+population. Final estimates are rescaled to match the Census April 1, 2020
+apportioment populations at the state level.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>bl_est_2020</span><span class='op'>(</span><span class='va'>data</span>, forecast_start <span class='op'>=</span> <span class='fl'>2010</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>the output of <code>load_state()</code></p></td>
+    </tr>
+    <tr>
+      <th>forecast_start</th>
+      <td><p>the year to use as the base year. E.g. if 2013, then
+the average growth rate from 2013--2019 will be used.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A modified data frame with just 2010, base year, and 2020 estimates.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='va'>d</span> <span class='op'>=</span> <span class='fu'>bl_download_state</span><span class='op'>(</span><span class='st'>"WA"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in bl_download_state("WA"): could not find function "bl_download_state"</span></div><div class='input'><span class='fu'>bl_est_2020</span><span class='op'>(</span><span class='va'>d</span>, <span class='fl'>2010</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in bl_est_2020(d, 2010): object 'd' not found</span></div><div class='input'><span class='co'># }</span>
+
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
