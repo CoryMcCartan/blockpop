@@ -20,7 +20,7 @@ A data frame with the population estimates.
 }
 \examples{
 \donttest{
-load_state("WA")
+bl_load_state("WA")
 }
 
 }
