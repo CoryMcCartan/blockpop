@@ -22,7 +22,7 @@ population. Final estimates are rescaled to match the Census April 1, 2020
 apportioment populations at the state level.
 }
 \examples{
-\donttest{
+\dontrun{
 d = bl_load_state("WA")
 bl_est_2020(d, 2010)
 }

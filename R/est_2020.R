@@ -12,7 +12,7 @@
 #' @returns A modified data frame with just 2010, base year, and 2020 estimates.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' d = bl_load_state("WA")
 #' bl_est_2020(d, 2010)
 #' }
