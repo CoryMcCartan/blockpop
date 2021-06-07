@@ -18,7 +18,7 @@ The path, invisibly.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\donttest{
+\dontrun{
 bl_download_fcc("data-raw/fcc.csv")
 }
 

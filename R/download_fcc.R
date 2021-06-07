@@ -7,7 +7,7 @@
 #'
 #' @returns The path, invisibly.
 #'
-#' @examples \donttest{
+#' @examples \dontrun{
 #' bl_download_fcc("data-raw/fcc.csv")
 #' }
 #'
