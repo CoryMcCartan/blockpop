@@ -8,7 +8,7 @@
 #' @returns A data frame with the population estimates.
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' bl_load_state("WA")
 #' }
 #'

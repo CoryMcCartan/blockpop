@@ -19,7 +19,7 @@ A data frame with the population estimates.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\donttest{
+\dontrun{
 bl_load_state("WA")
 }
 
