@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          options(install.packages.check.source = "no"
+          options(install.packages.check.source = "no")
           remotes::install_deps(dependencies = TRUE, type="binary")
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
