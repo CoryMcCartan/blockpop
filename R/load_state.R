@@ -18,7 +18,7 @@ bl_load_state = function(state, path="https://www.fcc.gov/file/19314/download") 
         cli::cli_alert_info("Downloading data.")
         url = path
         path = withr::local_tempfile(fileext=".zip")
-        download.file(url, path)
+        download.file(url, path, mode="wb")
     }
 
     if (str_ends(path, fixed(".zip"))) {

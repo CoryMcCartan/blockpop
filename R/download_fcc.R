@@ -14,7 +14,7 @@
 #' @export
 bl_download_fcc = function(path, url="https://www.fcc.gov/file/19314/download") {
     zip_path = withr::local_tempfile(fileext=".zip")
-    download.file(url, zip_path)
+    download.file(url, zip_path, mode="wb")
     unzip_dir = withr::local_tempdir()
     files = unzip(zip_path, list=TRUE)
     unzip_path = unzip(zip_path, files$Name[which.max(files$Length)], exdir=unzip_dir)
