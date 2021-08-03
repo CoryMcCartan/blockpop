@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320" /></a>
+# **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320"  style="padding: 12px" /></a>
 
 <!-- badges: start -->
 

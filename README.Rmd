@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320" /></a>
+# **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320"  style="padding: 12px" /></a>
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/CoryMcCartan/blockpop/workflows/R-CMD-check/badge.svg)](https://github.com/CoryMcCartan/blockpop/actions)
