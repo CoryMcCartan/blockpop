@@ -42,7 +42,17 @@ bl_download_2010_vars = function(state) {
     do.call(rbind, lapply(counties, function(county_fips) {
         tidycensus::get_decennial("block", state=state_fips, county=county_fips,
                                   variables=census_vars, cache_table=TRUE,
-                                  year=2010, output="wide")
+                                  year=2010, output="wide") |>
+            tryCatch(error = function(e) {
+                if (grepl("No content was returned", e$message)) {
+                    if (state_fips == "02") {
+                        cli::cli_info("Ignore this error for Alaska 2010 data.")
+                    }
+                    NULL
+                } else {
+                    e
+                }
+            })
     })) %>%
         rename(block=.data$GEOID) %>%
         select(-.data$NAME)

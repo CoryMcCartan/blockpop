@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
 # **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320"  style="padding: 12px" /></a>
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/CoryMcCartan/blockpop/workflows/R-CMD-check/badge.svg)](https://github.com/CoryMcCartan/blockpop/actions)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/CoryMcCartan/blockpop/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CoryMcCartan/blockpop/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 2020 Census data is delayed and will be affected by differential privacy.
@@ -49,7 +49,7 @@ library(blockpop)
 bl_download_fcc("data-raw/fcc.csv")
 ```
 
-Then we can extract the data for the state we care about and construct the 2020 
+Then we can extract the data for the state we care about and construct the 2020
 block estimates.
 
 ```{r message=F}
@@ -63,7 +63,7 @@ summarize(block_d, across(starts_with("pop"), sum))
 ```
 
 To add populations by race and ethnicity, we need to download ACS and 2010
-Census data. 
+Census data.
 
 ```{r include=F}
 acs_d = readr::read_rds("data-raw/acs.rds")

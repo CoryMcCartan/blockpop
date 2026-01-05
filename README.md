@@ -4,10 +4,8 @@
 # **blockpop**: Estimate Census Block Populations for 2020 <a href='https://corymccartan.github.io/blockpop'><img src='man/figures/logo.png' align="right" height="320"  style="padding: 12px" /></a>
 
 <!-- badges: start -->
-
-[![R-CMD-check](https://github.com/CoryMcCartan/blockpop/workflows/R-CMD-check/badge.svg)](https://github.com/CoryMcCartan/blockpop/actions)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/CoryMcCartan/blockpop/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CoryMcCartan/blockpop/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 2020 Census data is delayed and will be affected by differential

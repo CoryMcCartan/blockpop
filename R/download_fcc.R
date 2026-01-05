@@ -12,7 +12,7 @@
 #' }
 #'
 #' @export
-bl_download_fcc = function(path, url="https://www.fcc.gov/file/19314/download") {
+bl_download_fcc = function(path, url="https://www.fcc.gov/sites/default/files/Staff-Pop-Unit-Household-Estimates-2023.zip") {
     zip_path = withr::local_tempfile(fileext=".zip")
     download.file(url, zip_path, mode="wb")
     unzip_dir = withr::local_tempdir()
