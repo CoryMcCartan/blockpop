@@ -46,7 +46,7 @@ bl_download_2010_vars = function(state) {
             tryCatch(error = function(e) {
                 if (grepl("No content was returned", e$message)) {
                     if (state_fips == "02") {
-                        cli::cli_info("Ignore this error for Alaska 2010 data.")
+                        cli::cli_alert_info("Ignore this error for Alaska 2010 data.")
                     }
                     NULL
                 } else {
