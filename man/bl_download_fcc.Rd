@@ -4,7 +4,11 @@
 \alias{bl_download_fcc}
 \title{Download and extract all population estimates to a file}
 \usage{
-bl_download_fcc(path, url = "https://www.fcc.gov/file/19314/download")
+bl_download_fcc(
+  path,
+  url =
+    "https://www.fcc.gov/sites/default/files/Staff-Pop-Unit-Household-Estimates-2023.zip"
+)
 }
 \arguments{
 \item{path}{the path to extract the CSV (~1.3 gigabytes) to.}
